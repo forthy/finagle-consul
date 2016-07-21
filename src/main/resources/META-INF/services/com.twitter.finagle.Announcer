@@ -1,2 +1,2 @@
-com.brigade.finagle.consul.kv.ConsulKVAnnouncer
-com.brigade.finagle.consul.catalog.ConsulAgentCatalogAnnouncer
+com.github.matteobanerjee.finagle.consul.kv.ConsulKVAnnouncer
+com.github.matteobanerjee.finagle.consul.catalog.ConsulAgentCatalogAnnouncer

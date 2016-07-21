@@ -1,2 +1,2 @@
-com.brigade.finagle.consul.kv.ConsulKVResolver
-com.brigade.finagle.consul.catalog.ConsulCatalogResolver
+com.github.matteobanerjee.finagle.consul.kv.ConsulKVResolver
+com.github.matteobanerjee.finagle.consul.catalog.ConsulCatalogResolver
