@@ -1,7 +1,8 @@
 package com.brigade.finagle.consul
 
 import com.twitter.finagle.http.{Request, Response}
-import com.twitter.finagle.{Http, Service}
+import com.twitter.finagle.{Filter, Http, Service, SimpleFilter}
+import com.twitter.util.Future
 
 import scala.collection.mutable
 
@@ -14,7 +15,15 @@ object ConsulHttpClientFactory {
   def getClient(hosts: String): Client = {
     synchronized {
       val client = clients.getOrElseUpdate(hosts, {
-        Http.newService(hosts)
+        val filter = new SimpleFilter[Request, Response] {
+          override def apply(request: Request, service: Service[Request, Response]): Future[Response] = {
+            if (!request.headerMap.contains("Host")) {
+              request.headerMap.add("Host", "")
+            }
+            service(request)
+          }
+        }
+        filter andThen Http.newService(hosts)
       })
       client
     }

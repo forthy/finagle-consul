@@ -1,11 +1,10 @@
 package com.brigade.finagle.consul
 
-import com.twitter.finagle.Http
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
 class ConsulSessionSpec extends WordSpecLike with Matchers with BeforeAndAfterAll {
 
-  val client  = Http.newService("localhost:8500")
+  val client  = ConsulHttpClientFactory.getClient("localhost:8500")
 
   "open/reopen/close" in {
     val session = new ConsulSession(client, ConsulSession.Options("spec", ttl = 10, interval = 1, lockDelay = 1))

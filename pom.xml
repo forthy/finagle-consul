@@ -10,7 +10,7 @@
         <scala.version>2.11.7</scala.version>
         <scala.base.version>2.11</scala.base.version>
         <json4s.version>3.2.10</json4s.version>
-        <finagle.version>6.31.0</finagle.version>
+        <finagle.version>6.36.0</finagle.version>
     </properties>
 
     <dependencies>

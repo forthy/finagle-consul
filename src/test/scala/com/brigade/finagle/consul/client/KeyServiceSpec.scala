@@ -1,5 +1,6 @@
 package com.brigade.finagle.consul.client
 
+import com.brigade.finagle.consul.ConsulHttpClientFactory
 import com.twitter.finagle.{Http, http}
 import com.twitter.util.Await
 import org.scalatest.{Matchers, WordSpec}
@@ -10,7 +11,7 @@ class KeyServiceSpec extends WordSpec with Matchers {
   case class Value(name: String)
   case class Session(ID: String)
 
-  val httpClient = Http.newService("localhost:8500")
+  val httpClient = ConsulHttpClientFactory.getClient("localhost:8500")
   val service    = KeyService(httpClient)
 
   "simple create/get/destroy" in {

@@ -1,15 +1,14 @@
 package com.brigade.finagle.consul.catalog
 
 import com.brigade.finagle.consul.{ConsulHttpClientFactory, ConsulQuery}
-import com.twitter.finagle.http.{Method, RequestBuilder, Request}
+import com.twitter.finagle.http.{Method, Request}
 import com.twitter.finagle.util.DefaultTimer
-import com.twitter.finagle.{Addr, Resolver}
+import com.twitter.finagle.{Addr, Address, Resolver}
 import com.twitter.logging.Logger
 import com.twitter.util.{Await, Var}
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
-
-import java.net.{SocketAddress, InetSocketAddress}
+import java.net.InetSocketAddress
 
 /**
  * A finagle Resolver for services registered in the consul catalog
@@ -39,13 +38,13 @@ class ConsulCatalogResolver extends Resolver {
     s"$path$query"
   }
 
-  private def jsonToAddresses(json: JValue): Set[SocketAddress] = {
+  private def jsonToAddresses(json: JValue): Set[Address] = {
     json
       .extract[Set[HealthJson]]
-      .map { ex => new InetSocketAddress(ex.Service.Address, ex.Service.Port)}
+      .map { ex => Address(new InetSocketAddress(ex.Service.Address, ex.Service.Port)) }
   }
 
-  private def addresses(hosts: String, q: ConsulQuery) : Set[SocketAddress] = {
+  private def addresses(hosts: String, q: ConsulQuery) : Set[Address] = {
     val client = ConsulHttpClientFactory.getClient(hosts)
     val path = mkPath(q)
     val req = Request(Method.Get, path)

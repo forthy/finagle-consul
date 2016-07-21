@@ -1,12 +1,12 @@
 package com.brigade.finagle.consul.kv
 
-import com.brigade.finagle.consul.ConsulSession
+import com.brigade.finagle.consul.{ConsulHttpClientFactory, ConsulSession}
 import com.twitter.finagle.Http
-import org.scalatest.{WordSpec, BeforeAndAfterAll, Matchers}
+import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
 
 class ConsulKVServiceSpec extends WordSpec with Matchers with BeforeAndAfterAll {
 
-  val client  = Http.newService("localhost:8500")
+  val client  = ConsulHttpClientFactory.getClient("localhost:8500")
 
   "create/list/destroy" in {
     val session0 = new ConsulSession(client, ConsulSession.Options("spec"))
